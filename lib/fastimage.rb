@@ -45,6 +45,7 @@ require 'addressable/uri'
 require 'fastimage/fbr.rb'
 
 class FastImage
+  attr_accessor :use_ssl
   attr_reader :size, :type
   
   attr_reader :bytes_read
@@ -255,7 +256,7 @@ class FastImage
       @http = Net::HTTP.new(@parsed_uri.host, @parsed_uri.port)
     end
     
-    @http.use_ssl = (@parsed_uri.scheme == "https")
+    @http.use_ssl = (@parsed_uri.scheme == "https" && use_ssl)
     @http.verify_mode = OpenSSL::SSL::VERIFY_NONE
     @http.open_timeout = @timeout
     @http.read_timeout = @timeout
